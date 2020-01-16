@@ -1,5 +1,5 @@
 //
-//  etdrsLetterInputCell.swift
+//  LetterScoreInputCell.swift
 //  VA Scale
 //
 //  Created by Kaccie Y Li on 1/14/20.
@@ -8,11 +8,16 @@
 
 import UIKit
 
-class letterScoreInputCell: UITableViewCell {
+class LetterScoreInputCell: UITableViewCell {
+
+	// TODO: make right detail label a textfield where user can input via keypad
+
+	var onValueChange: ((LetterScoreInputCell, Int8) -> Void)? = nil
 
 	var score: Int8 = 85 {
 		didSet{
-			textLabel?.text = "\(score)"
+			stepper.value = Double(score)
+			detailTextLabel?.text = "\(score)"
 		}
 	}
 
@@ -25,18 +30,13 @@ class letterScoreInputCell: UITableViewCell {
 		stepper.addTarget(self, action: #selector(stepperTapped(_:)), for: .valueChanged)
 		stepper.minimumValue = 20
 		stepper.maximumValue = 100
-		stepper.stepValue = 5
+		stepper.stepValue = 1
 		stepper.value = Double(score)
     }
 
 	@IBAction private func stepperTapped(_ sender: UIStepper) {
 		score = Int8(stepper.value)
-		//onValueChange?(self, diopters)
+		onValueChange?(self, score)
 	}
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//        // Configure the view for the selected state
-//    }
 
 }
