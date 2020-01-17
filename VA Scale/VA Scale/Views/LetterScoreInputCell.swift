@@ -34,11 +34,15 @@ class LetterScoreInputCell: UITableViewCell {
 
 	private var stepper = UIStepper()
 
+	@IBAction private func stepperTapped(_ sender: UIStepper) {
+		score = Int8(stepper.value)
+		onValueChange?(self, score)
+	}
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
 		textField.inputAccessoryView = KeyboardToolbar({ self.textField.resignFirstResponder() })
-		//textField.delegate = stepper
 
 		accessoryView = stepper
 		stepper.addTarget(self, action: #selector(stepperTapped(_:)), for: .valueChanged)
@@ -47,16 +51,11 @@ class LetterScoreInputCell: UITableViewCell {
 		stepper.stepValue = 1
 		stepper.value = Double(score)
 	}
-
-	@IBAction private func stepperTapped(_ sender: UIStepper) {
-		score = Int8(stepper.value)
-		onValueChange?(self, score)
-	}
 }
 
 extension LetterScoreInputCell: UITextFieldDelegate {
 	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-		print(textField.text)
+
 		if let text = textField.text, let textRange = Range(range, in: text) {
 			let updatedText = text.replacingCharacters(in: textRange, with: string)
 			if updatedText.isEmpty {
@@ -65,15 +64,15 @@ extension LetterScoreInputCell: UITextFieldDelegate {
 			}
 			guard let intValue = Int8(updatedText) else {
 				inputValid = false
-				return false
+				return true
 			}
-			guard intValue >= 20, intValue <= 100 else {
-				return false
-			}
-			inputValid = intValue > 0
-			if inputValid {
+
+			if intValue >= 20, intValue <= 100 {
+				inputValid = true
 				stepper.value = Double(intValue)
 				onValueChange?(self, intValue)
+			} else {
+				inputValid = false
 			}
 			return true
 		}
