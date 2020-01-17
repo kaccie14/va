@@ -20,6 +20,7 @@
 		8BD2E08123CEB332003E1668 /* SnellenOutputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E08023CEB332003E1668 /* SnellenOutputCell.swift */; };
 		8BD2E08423D00016003E1668 /* ScaleFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E08323D00016003E1668 /* ScaleFormatter.swift */; };
 		8BD2E08623D00087003E1668 /* ScaleUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E08523D00087003E1668 /* ScaleUnits.swift */; };
+		8BD2E08823D02A4F003E1668 /* KeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E08723D02A4F003E1668 /* KeyboardToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		8BD2E08023CEB332003E1668 /* SnellenOutputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnellenOutputCell.swift; sourceTree = "<group>"; };
 		8BD2E08323D00016003E1668 /* ScaleFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleFormatter.swift; sourceTree = "<group>"; };
 		8BD2E08523D00087003E1668 /* ScaleUnits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleUnits.swift; sourceTree = "<group>"; };
+		8BD2E08723D02A4F003E1668 /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				8BD2E08323D00016003E1668 /* ScaleFormatter.swift */,
 				8BD2E08523D00087003E1668 /* ScaleUnits.swift */,
+				8BD2E08723D02A4F003E1668 /* KeyboardToolbar.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				8B7C2A2723CCECAA005E129E /* FormSection.swift in Sources */,
 				8B7C2A1323CBC08E005E129E /* ScaleViewController.swift in Sources */,
 				8BD2E07F23CE87D7003E1668 /* ScaleType.swift in Sources */,
+				8BD2E08823D02A4F003E1668 /* KeyboardToolbar.swift in Sources */,
 				8BD2E08123CEB332003E1668 /* SnellenOutputCell.swift in Sources */,
 				8B7C2A0F23CBC08E005E129E /* AppDelegate.swift in Sources */,
 				8B7C2A1123CBC08E005E129E /* SceneDelegate.swift in Sources */,
