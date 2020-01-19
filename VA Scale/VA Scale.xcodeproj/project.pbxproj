@@ -72,18 +72,18 @@
 		8B7C2A0D23CBC08E005E129E /* VA Scale */ = {
 			isa = PBXGroup;
 			children = (
+				8BD2E07E23CE87D7003E1668 /* ScaleType.swift */,
 				8BD2E08223CFB39E003E1668 /* Classes */,
 				8B7C2A2223CC2061005E129E /* Controllers */,
 				8B7C2A2323CC2077005E129E /* Views */,
 				8B7C2A0E23CBC08E005E129E /* AppDelegate.swift */,
 				8B7C2A1023CBC08E005E129E /* SceneDelegate.swift */,
 				8B7C2A1423CBC08E005E129E /* Main.storyboard */,
-				8B7C2A1723CBC093005E129E /* Assets.xcassets */,
 				8B7C2A1923CBC093005E129E /* LaunchScreen.storyboard */,
+				8B7C2A1723CBC093005E129E /* Assets.xcassets */,
 				8B7C2A1C23CBC093005E129E /* Info.plist */,
 				8B7C2A2423CC20F7005E129E /* FormItem.swift */,
 				8B7C2A2623CCECAA005E129E /* FormSection.swift */,
-				8BD2E07E23CE87D7003E1668 /* ScaleType.swift */,
 			);
 			path = "VA Scale";
 			sourceTree = "<group>";

@@ -28,13 +28,26 @@ class ScaleConverter: UnitConverter {
 	}
 }
 
-// add snellen 3
+// MARK: - Snellen converters
+// outputs the denominator of vulgar fraction ignoring +/- letters
 
+class ScaleSnellen3Converter: ScaleLogMarConverter {
+	override func baseUnitValue(fromValue value: Double) -> Double {
+		from(logMar: log10(value / 3.0))
+	}
+
+	override func value(fromBaseUnitValue baseUnitValue: Double) -> Double {
+		let etdrs = 5.0 * round(baseUnitValue / 5.0)
+		let MAR = pow(10, logMar(for: etdrs))
+		let denominator = 3.0 * MAR
+
+		return round(denominator)
+	}
+}
 
 class ScaleSnellen6Converter: ScaleLogMarConverter {
 
 	override func baseUnitValue(fromValue value: Double) -> Double {
-		// Denominator (6/6) → MAR/logMAR → ETDRS
 		from(logMar: log10(value / 6.0))
 	}
 
@@ -46,21 +59,30 @@ class ScaleSnellen6Converter: ScaleLogMarConverter {
 
 		// Common rounded values for Snellen 6/6
 		switch denominator {
-		case 12.0...120:
-			denominator = round(denominator)
 		case 6.0..<12.0:
 			denominator = round(2.0 * denominator) / 2.0
 		case 3.0..<6:
 			denominator = round(5.0 * denominator) / 5.0
 		default:
-			break
+			denominator = round(denominator)
 		}
 		return denominator
 	}
 }
 
+class ScaleSnellen10Converter: ScaleLogMarConverter {
+	override func baseUnitValue(fromValue value: Double) -> Double {
+		from(logMar: log10(value / 10.0))
+	}
 
-// add snellen 10
+	override func value(fromBaseUnitValue baseUnitValue: Double) -> Double {
+		let etdrs = 5.0 * round(baseUnitValue / 5.0)
+		let MAR = pow(10, logMar(for: etdrs))
+		let denominator = 10.0 * MAR
+
+		return round(denominator)
+	}
+}
 
 class ScaleSnellen20Converter: ScaleLogMarConverter {
 
@@ -90,6 +112,8 @@ class ScaleSnellen20Converter: ScaleLogMarConverter {
 		return denominator
 	}
 }
+
+// MARK: - Other converters
 
 class ScaleDecimalConverter: ScaleLogMarConverter {
 
@@ -138,9 +162,6 @@ class ScaleLogMarConverter: ScaleConverter {
 	}
 }
 
-
-
-
 class ScaleUnit: Dimension {
 	override class func baseUnit() -> Self {
 		return ScaleUnit.etdrs as! Self
@@ -148,7 +169,9 @@ class ScaleUnit: Dimension {
 	static let etdrs = ScaleUnit(symbol: "etdrs", converter: ScaleConverter())
 	static let logMar = ScaleUnit(symbol: "logMar", converter: ScaleLogMarConverter())
 	static let mar = ScaleUnit(symbol: "mar", converter: ScaleMarConverter())
+	static let snellen3 = ScaleUnit(symbol: "snellen3", converter: ScaleSnellen3Converter())
 	static let snellen6 = ScaleUnit(symbol: "snellen6", converter: ScaleSnellen6Converter())
+	static let snellen10 = ScaleUnit(symbol: "snellen10", converter: ScaleSnellen10Converter())
 	static let snellen20 = ScaleUnit(symbol: "snellen20", converter: ScaleSnellen20Converter())
 	static let decimal = ScaleUnit(symbol: "decimal", converter: ScaleDecimalConverter())
 }

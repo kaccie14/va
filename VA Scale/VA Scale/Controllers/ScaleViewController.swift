@@ -11,12 +11,14 @@ import UIKit
 class ScaleViewController: UITableViewController {
 
 	private let requiredOutputPath = IndexPath(row: 0, section: 1)
+	private let optionalOutputPaths = [IndexPath(row: 0, section: 2),  IndexPath(row: 1, section: 2),  IndexPath(row: 2, section: 2)]
 	private var sections: FormSections = []
 
 	private var score: Int8 = 85 {
 		didSet {
 			guard score != oldValue else { return }
 			sections[requiredOutputPath.section].items[0] = FormItem("snellenViewCell", title: "Snellen", detail: "20 feet", score: score)
+			update(optionalOutputSectionWith: score)
 			tableView.reloadRows(at: [requiredOutputPath], with: .none)
 		}
 	}
@@ -25,10 +27,18 @@ class ScaleViewController: UITableViewController {
 		super.viewDidLoad()
 
 		setup(sectionForInput: .etdrs, withScore: score)
-		setup(sectionForDisplaying: "")
+		setup(sectionForRequired: "")
+		setup(sectionForOptional: "")
 	}
 
 	// MARK: - Helper functions
+
+	private func update(optionalOutputSectionWith score: Int8) {
+		sections[2].items[0] = FormItem("snellenViewCell", title: "Snellen", detail: "10 feet", score: score)
+		sections[2].items[1] = FormItem("snellenViewCell", title: "Snellen", detail: "3 feet", score: score)
+		sections[2].items[2] = FormItem("snellenViewCell", title: "Snellen", detail: "6 feet", score: score)
+		tableView.reloadRows(at: optionalOutputPaths, with: .none)
+	}
 
 	private func setup(sectionForInput scale: ScaleType, withScore: Int8) {
 		let formItems = [
@@ -39,13 +49,24 @@ class ScaleViewController: UITableViewController {
 		sections.insert(FormSection(items: formItems), at: 0)
 	}
 
-	private func setup(sectionForDisplaying output: String) {
+	private func setup(sectionForRequired output: String) {
 		let formItems = [
 			FormItem("snellenViewCell", title: "Snellen", detail: "20 feet")
 		]
 
 		sections.insert(FormSection(items: formItems), at: 1)
 	}
+
+	private func setup(sectionForOptional output: String) {
+		let formItems = [
+			FormItem("snellenViewCell", title: "Snellen", detail: "10 feet"),
+			FormItem("snellenViewCell", title: "Snellen", detail: "3 meters"),
+			FormItem("snellenViewCell", title: "Snellen", detail: "6 meters")
+		]
+
+		sections.insert(FormSection(items: formItems), at: 2)
+	}
+
 
 	// MARK: - Table view data source
 
@@ -76,11 +97,25 @@ class ScaleViewController: UITableViewController {
 			}
 
 			if let cell = cell as? SnellenOutputCell {
-				cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: .snellen20)
+				switch indexPath.row {
+				case 0:
+					cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: indexPath.section == 1 ? .snellen20 : .snellen10)
+				case 1:
+					cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: .snellen3)
+				case 2:
+					cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: .snellen6)
+				default:
+					cell.scoreLabel.text = "💩"
+				}
 			}
 		}
 
 		return cell
 	}
 
+	// MARK: - Table view delegate
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return section == 2 ? "User Optional Scales" : nil
+	}
 }
