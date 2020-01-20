@@ -18,8 +18,8 @@ class ScaleViewController: UITableViewController {
 		didSet {
 			guard score != oldValue else { return }
 			sections[requiredOutputPath.section].items[0] = FormItem("snellenViewCell", title: "Snellen", detail: "20 feet", score: score)
-			update(optionalOutputSectionWith: score)
 			tableView.reloadRows(at: [requiredOutputPath], with: .none)
+			update(optionalOutputSectionWith: score)
 		}
 	}
 
@@ -117,5 +117,11 @@ class ScaleViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return section == 2 ? "User Optional Scales" : nil
+	}
+
+	// MARK: - Navigation
+
+	@IBAction func unwindToScaleViewController(segue: UIStoryboardSegue) {
+
 	}
 }
