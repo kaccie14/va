@@ -16,6 +16,7 @@
 		8B7C2A2523CC20F7005E129E /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C2A2423CC20F7005E129E /* FormItem.swift */; };
 		8B7C2A2723CCECAA005E129E /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C2A2623CCECAA005E129E /* FormSection.swift */; };
 		8BB86E6323D4D77400E2C415 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB86E6223D4D77400E2C415 /* SettingsViewController.swift */; };
+		8BB86E6523D5436600E2C415 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB86E6423D5436600E2C415 /* Settings.swift */; };
 		8BD2E07D23CE2A24003E1668 /* LetterScoreInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E07C23CE2A24003E1668 /* LetterScoreInputCell.swift */; };
 		8BD2E07F23CE87D7003E1668 /* ScaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E07E23CE87D7003E1668 /* ScaleType.swift */; };
 		8BD2E08123CEB332003E1668 /* SnellenOutputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2E08023CEB332003E1668 /* SnellenOutputCell.swift */; };
@@ -36,6 +37,7 @@
 		8B7C2A2423CC20F7005E129E /* FormItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
 		8B7C2A2623CCECAA005E129E /* FormSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSection.swift; sourceTree = "<group>"; };
 		8BB86E6223D4D77400E2C415 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8BB86E6423D5436600E2C415 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8BD2E07C23CE2A24003E1668 /* LetterScoreInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterScoreInputCell.swift; sourceTree = "<group>"; };
 		8BD2E07E23CE87D7003E1668 /* ScaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleType.swift; sourceTree = "<group>"; };
 		8BD2E08023CEB332003E1668 /* SnellenOutputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnellenOutputCell.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 		8B7C2A0D23CBC08E005E129E /* VA Scale */ = {
 			isa = PBXGroup;
 			children = (
+				8BB86E6423D5436600E2C415 /* Settings.swift */,
 				8BD2E07E23CE87D7003E1668 /* ScaleType.swift */,
 				8BD2E08223CFB39E003E1668 /* Classes */,
 				8B7C2A2223CC2061005E129E /* Controllers */,
@@ -191,6 +194,7 @@
 			files = (
 				8BD2E08623D00087003E1668 /* ScaleUnits.swift in Sources */,
 				8BD2E08423D00016003E1668 /* ScaleFormatter.swift in Sources */,
+				8BB86E6523D5436600E2C415 /* Settings.swift in Sources */,
 				8B7C2A2523CC20F7005E129E /* FormItem.swift in Sources */,
 				8B7C2A2723CCECAA005E129E /* FormSection.swift in Sources */,
 				8B7C2A1323CBC08E005E129E /* ScaleViewController.swift in Sources */,
