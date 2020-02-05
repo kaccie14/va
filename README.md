@@ -1,2 +1,2 @@
-# va
-Easy conversion across different visual acuity scales
+# Visual Acuity
+Easy conversion across popular scales for visual acuity
