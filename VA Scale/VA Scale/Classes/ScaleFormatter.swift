@@ -14,26 +14,32 @@ class ScaleFormatter {
 		let etdrs = Measurement(value: Double(score), unit: ScaleUnit.etdrs)
 
 		switch type {
-		case .etdrs: // etdrs
+		case .etdrs:
 			return String(format: "%.0f", etdrs.value)
-		case .snellen6: // snellen6
+		case .snellen3:
+			let x = etdrs.converted(to: .snellen3).value
+			let dx = fabs(x - round(x))
+			return "3/" + String(format: dx < 0.01 ? "%1.0f" : "%1.1f", x) + plusMinusLetters(etdrs: score)
+		case .snellen6:
 			let x = etdrs.converted(to: .snellen6).value
 			let dx = fabs(x - round(x))
 			return "6/" + String(format: dx < 0.01 ? "%1.0f" : "%1.1f", x) + plusMinusLetters(etdrs: score)
-		case .snellen20: // snellen20
+		case .snellen10:
+			let x = etdrs.converted(to: .snellen10).value
+			let dx = fabs(x - round(x))
+			return "10/" + String(format: dx < 0.01 ? "%1.0f" : "%1.1f", x) + plusMinusLetters(etdrs: score)
+		case .snellen20:
 			let x = etdrs.converted(to: .snellen20).value
 			let dx = fabs(x - round(x))
 			return "20/" + String(format: dx < 0.01 ? "%1.0f" : "%1.1f", x) + plusMinusLetters(etdrs: score)
-		case .decimal: // decimal
+		case .decimal:
 			let x = etdrs.converted(to: .decimal).value
 			let dx = fabs(x - round(1000.0 * x)/1000.0)
 			return String(format: dx < 1e-3 ? "%1.2f" : "%1.3f", x)
-		case .mar: // MAR
+		case .mar:
 			return String(format: "%1.2f", etdrs.converted(to: .mar).value)
-		case .logMAR: // logMAR
+		case .logMAR:
 			return String(format: "%1.2f", etdrs.converted(to: .logMar).value)
-		default:
-			return "💩"
 		}
 	}
 

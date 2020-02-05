@@ -23,7 +23,7 @@ enum ScaleType: Int {
 		case .etdrs:
 			return "ETDRS 85"
 		case .snellen3:
-			return "ETDRS (3 m)"
+			return "Snellen (3 m)"
 		case .snellen6:
 			return "Snellen (6 m)"
 		case .snellen10:
@@ -38,8 +38,4 @@ enum ScaleType: Int {
 			return "logMAR"
 		}
 	}
-}
-
-extension ScaleType: CaseIterable {
-	static let usableCases: [ScaleType] = [.etdrs, .snellen20, .logMAR]
 }

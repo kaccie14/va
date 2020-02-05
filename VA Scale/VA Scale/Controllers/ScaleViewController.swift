@@ -10,27 +10,29 @@ import UIKit
 
 class ScaleViewController: UITableViewController {
 
-	private let requiredOutputPath = IndexPath(row: 0, section: 1)
+	private var optionalOutputs: [ScaleType] = []
+	private var updateOptionalOutputs = false
+
 	private var sections: FormSections = []
 
 	private var score: Int8 = 85 {
-		didSet {
+		didSet { // update required and optional output cells with new score
 			guard score != oldValue else { return }
-			sections[requiredOutputPath.section].items[0] = FormItem("snellenViewCell", title: "Snellen", detail: "20 feet", score: score)
-			tableView.reloadRows(at: [requiredOutputPath], with: .none)
+			tableView.reloadSections([1, 2], with: .none)
 		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		setup(sectionForInput: .etdrs, withScore: score)
-		setup(sectionForDisplaying: "")
+		setup(sectionForInput: .etdrs, with: score)
+		setup(sectionForRequired: "")
+		updateOptionalOutputProperties()
 	}
 
 	// MARK: - Helper functions
 
-	private func setup(sectionForInput scale: ScaleType, withScore: Int8) {
+	private func setup(sectionForInput scale: ScaleType, with score: Int8) {
 		let formItems = [
 			FormItem("inputTitleCell", title: "Input Scale", detail: "ETDRS (85)"),
 			FormItem("letterScoreInputCell", title: "Score", score: score)
@@ -39,12 +41,49 @@ class ScaleViewController: UITableViewController {
 		sections.insert(FormSection(items: formItems), at: 0)
 	}
 
-	private func setup(sectionForDisplaying output: String) {
+	private func setup(sectionForRequired output: String) {
 		let formItems = [
 			FormItem("snellenViewCell", title: "Snellen", detail: "20 feet")
 		]
 
 		sections.insert(FormSection(items: formItems), at: 1)
+	}
+
+	private func updateOptionalOutputProperties() {
+		if updateOptionalOutputs {
+			optionalOutputs.removeAll()
+			updateOptionalOutputs = false
+			sections.remove(at: 2)
+		}
+
+		var formItems: [FormItem] = []
+
+		if Settings.display_snellen_10feet {
+			optionalOutputs.append(.snellen10)
+			formItems.append(FormItem("snellenViewCell", title: "Snellen", detail: "10 feet"))
+		}
+		if Settings.display_snellen_3meters {
+			optionalOutputs.append(.snellen3)
+			formItems.append(FormItem("snellenViewCell", title: "Snellen", detail: "3 meters"))
+		}
+		if Settings.display_snellen_6meters {
+			optionalOutputs.append(.snellen6)
+			formItems.append(FormItem("snellenViewCell", title: "Snellen", detail: "6 meters"))
+		}
+		if Settings.display_decimal {
+			optionalOutputs.append(.decimal)
+			formItems.append(FormItem("rightDetailCell", title: "Decimal"))
+		}
+		if Settings.display_mar {
+			optionalOutputs.append(.mar)
+			formItems.append(FormItem("rightDetailCell", title: "MAR"))
+		}
+		if Settings.display_logmar {
+			optionalOutputs.append(.logMAR)
+			formItems.append(FormItem("rightDetailCell", title: "logMAR"))
+		}
+
+		sections.insert(FormSection(title: "User Optional Scale(s)", items: formItems), at: 2)
 	}
 
 	// MARK: - Table view data source
@@ -73,14 +112,34 @@ class ScaleViewController: UITableViewController {
 				cell.onValueChange = { _, value in
 					self.score = value
 				}
-			}
-
-			if let cell = cell as? SnellenOutputCell {
-				cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: .snellen20)
+			} else if let cell = cell as? SnellenOutputCell {
+				cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: indexPath.section == 1 ? .snellen20 : optionalOutputs[indexPath.row])
+			} else if item.reuseIdentifier == "rightDetailCell" {
+				cell.detailTextLabel?.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: optionalOutputs[indexPath.row])
 			}
 		}
 
 		return cell
 	}
 
+	// MARK: - Table view delegate
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		let title = sections[section].title
+		return title.isEmpty || (sections[section].items.count == 0) ? nil : title
+	}
+
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		return section == 0 ? "ETDRS score ranges from 20 and 100 letters" : nil
+	}
+
+	// MARK: - Navigation
+
+	@IBAction func unwindToScaleViewController(segue: UIStoryboardSegue) {
+		if segue.identifier == "doneSettings" {
+			updateOptionalOutputs = true
+			updateOptionalOutputProperties()
+			tableView.reloadData()
+		}
+	}
 }
