@@ -31,14 +31,6 @@ struct FormItem {
 		self.score = nil
 	}
 
-	init(_ reuseIdentifier: String, title: String, detail: String, score: Int8) {
-		self.reuseIdentifier = reuseIdentifier
-		self.title = title
-		self.detail = detail
-		self.accessory = nil
-		self.score = score
-	}
-
 	init(_ reuseIdentifier: String, title: String, score: Int8) {
 		self.reuseIdentifier = reuseIdentifier
 		self.title = title

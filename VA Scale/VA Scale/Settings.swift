@@ -9,6 +9,9 @@
 import Foundation
 
 struct Settings {
+	@UserDefault("input_etdrs", defaultValue: true)
+	static var input_etdrs: Bool
+
 	@UserDefault("display_snellen_3meters", defaultValue: false)
 	static var display_snellen_3meters: Bool
 

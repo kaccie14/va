@@ -39,7 +39,3 @@ enum ScaleType: Int {
 		}
 	}
 }
-
-extension ScaleType: CaseIterable {
-	static let usableCases: [ScaleType] = [.etdrs, .snellen20, .logMAR]
-}
