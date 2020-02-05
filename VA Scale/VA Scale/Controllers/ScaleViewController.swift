@@ -129,6 +129,10 @@ class ScaleViewController: UITableViewController {
 		return title.isEmpty || (sections[section].items.count == 0) ? nil : title
 	}
 
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		return section == 0 ? "ETDRS score ranges from 20 and 100 letters" : nil
+	}
+
 	// MARK: - Navigation
 
 	@IBAction func unwindToScaleViewController(segue: UIStoryboardSegue) {
