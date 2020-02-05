@@ -32,6 +32,23 @@ class ScaleViewController: UITableViewController {
 
 	// MARK: - Helper functions
 
+	private func setup(sectionForInput scale: ScaleType, with score: Int8) {
+		let formItems = [
+			FormItem("inputTitleCell", title: "Input Scale", detail: "ETDRS (85)"),
+			FormItem("letterScoreInputCell", title: "Score", score: score)
+		]
+
+		sections.insert(FormSection(items: formItems), at: 0)
+	}
+
+	private func setup(sectionForRequired output: String) {
+		let formItems = [
+			FormItem("snellenViewCell", title: "Snellen", detail: "20 feet")
+		]
+
+		sections.insert(FormSection(items: formItems), at: 1)
+	}
+
 	private func updateOptionalOutputProperties() {
 		if updateOptionalOutputs {
 			optionalOutputs.removeAll()
@@ -53,25 +70,20 @@ class ScaleViewController: UITableViewController {
 			optionalOutputs.append(.snellen6)
 			formItems.append(FormItem("snellenViewCell", title: "Snellen", detail: "6 meters"))
 		}
+		if Settings.display_decimal {
+			optionalOutputs.append(.decimal)
+			formItems.append(FormItem("rightDetailCell", title: "Decimal"))
+		}
+		if Settings.display_mar {
+			optionalOutputs.append(.mar)
+			formItems.append(FormItem("rightDetailCell", title: "MAR"))
+		}
+		if Settings.display_logmar {
+			optionalOutputs.append(.logMAR)
+			formItems.append(FormItem("rightDetailCell", title: "logMAR"))
+		}
 
-		sections.insert(FormSection(items: formItems), at: 2)
-	}
-
-	private func setup(sectionForInput scale: ScaleType, with score: Int8) {
-		let formItems = [
-			FormItem("inputTitleCell", title: "Input Scale", detail: "ETDRS (85)"),
-			FormItem("letterScoreInputCell", title: "Score", score: score)
-		]
-
-		sections.insert(FormSection(items: formItems), at: 0)
-	}
-
-	private func setup(sectionForRequired output: String) {
-		let formItems = [
-			FormItem("snellenViewCell", title: "Snellen", detail: "20 feet")
-		]
-
-		sections.insert(FormSection(items: formItems), at: 1)
+		sections.insert(FormSection(title: "User Optional Scale(s)", items: formItems), at: 2)
 	}
 
 	// MARK: - Table view data source
@@ -102,6 +114,8 @@ class ScaleViewController: UITableViewController {
 				}
 			} else if let cell = cell as? SnellenOutputCell {
 				cell.scoreLabel.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: indexPath.section == 1 ? .snellen20 : optionalOutputs[indexPath.row])
+			} else if item.reuseIdentifier == "rightDetailCell" {
+				cell.detailTextLabel?.text = ScaleFormatter.scaleFormat(fromLetter: score, toScale: optionalOutputs[indexPath.row])
 			}
 		}
 
@@ -111,7 +125,8 @@ class ScaleViewController: UITableViewController {
 	// MARK: - Table view delegate
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return (section == 2 && sections[2].items.count != 0) ? "User Optional Scale(s)" : nil
+		let title = sections[section].title
+		return title.isEmpty || (sections[section].items.count == 0) ? nil : title
 	}
 
 	// MARK: - Navigation
