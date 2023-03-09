@@ -20,7 +20,7 @@ class SettingsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Store original settings should use tap cancel button
+		// Store original settings should user tap cancel button
 		snellen_10feet = Settings.display_snellen_10feet
 		snellen_3meters = Settings.display_snellen_3meters
 		snellen_6meters = Settings.display_snellen_6meters
